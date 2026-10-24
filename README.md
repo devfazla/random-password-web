@@ -9,7 +9,7 @@ Everything happens client-side — no network requests, no accounts, no storage.
 - **Cryptographically secure randomness** — uniform integers via rejection sampling (see below)
 - **Adjustable length** — 6 to 32 characters, defaults to 12; regenerates as you drag the slider
 - **Four character sets** — uppercase, lowercase, digits, and special characters, each toggleable
-- **One-click copy** — writes to the clipboard and shows a check mark for two seconds
+- **One-click copy** — the copy button or the password itself writes to the clipboard and shows a green check for two seconds
 - **Empty-set guard** — disabling every character set displays `---` and blocks copying instead of producing a broken value
 - **Responsive layout** — centered card that adapts from mobile to desktop
 
@@ -33,7 +33,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs on <http://localhost:5173>.
+The dev server runs on <http://localhost:5173/random-password-web/>. The app is served under the `/random-password-web/` base path so local URLs match the deployed ones.
 
 ```bash
 npm run build     # production bundle in dist/
@@ -42,20 +42,33 @@ npm run preview   # serve the built bundle locally
 
 `dist/` and `node_modules/` are git-ignored.
 
+## Deployment
+
+Published to GitHub Pages at <https://devfazla.github.io/random-password-web/> as a project page.
+
+- `vite.config.js` sets `base: '/random-password-web/'`, so built asset URLs carry the repository name. Renaming the repository means changing that value.
+- `.github/workflows/deploy.yml` builds on every push to `main` (and on manual dispatch), then publishes `dist/` through `actions/deploy-pages`.
+- The Pages source must be set to **GitHub Actions**, not a branch.
+- There is no client-side router, so no `404.html` fallback is required.
+
 ## Project structure
 
 ```
 web/
-├── index.html                 # HTML shell, font/icon CDN links, #root mount
-├── vite.config.js             # React plugin, dev server on port 5173
+├── index.html                 # HTML shell, font/icon links, #root mount
+├── vite.config.js             # React plugin, Pages base path, dev server port
 ├── tailwind.config.js         # scans index.html and src/**/*.{js,jsx}
 ├── postcss.config.js          # tailwindcss + autoprefixer
 ├── public/
-│   └── random-password-generator-background.png   # page background image
+│   └── favicon.svg            # site icon
+├── .github/workflows/
+│   └── deploy.yml             # build + GitHub Pages deploy
 └── src/
     ├── main.jsx               # React entry point, mounts <App /> in StrictMode
     ├── App.jsx                # Generator state, UI, and password assembly
     ├── styles.css             # Tailwind layers, color tokens, component styles
+    ├── assets/
+    │   └── random-password-generator-background.png   # page background
     └── lib/
         └── randomInt.js       # crypto-backed uniform integer helper
 ```
@@ -81,4 +94,4 @@ Defaults on load: length 12, uppercase/lowercase/digits on, special characters o
 
 - Clipboard access uses `navigator.clipboard`, which browsers only expose in a secure context — `localhost` or HTTPS. Over plain HTTP (other than localhost) copying silently does nothing.
 - Tailwind utility classes and the `--primary`, `--secondary`, `--muted` design tokens are applied in parallel in `App.jsx`, so theme colors live in `src/styles.css` under `:root`. Change them there.
-- The root of this repository also contains a standalone `random-password.html` with the same generator as a single self-contained file, and a Flutter app under `app/` for mobile builds.
+- This repository contains the web app only. The standalone single-file `random-password.html` and the Flutter to-do app live one directory up, outside this repository.

@@ -40,7 +40,7 @@ body {
 }
 
 .bg-image {
-  background-image: url('/random-password-generator-background.png');
+  background-image: url('./assets/random-password-generator-background.png');
   background-size: cover;
   background-position: center;
 }

@@ -97,7 +97,7 @@ export default function App() {
   }
 
   const copyIconClass = copied
-    ? 'fa-regular text-lg fa-check text-green-400'
+    ? 'fa-solid fa-check text-lg text-green-400'
     : 'fa-regular fa-copy text-lg';
 
   return (
@@ -116,7 +116,9 @@ export default function App() {
             >
               <div
                 id="password-output"
-                className={`mono text-2xl md:text-3xl font-bold tracking-widest text-center break-all text-primary select-all${
+                onClick={handleCopy}
+                title="Click to copy"
+                className={`mono text-2xl md:text-3xl font-bold tracking-widest text-center break-all text-primary select-all cursor-pointer${
                   result.empty ? ' text-slate-600' : ''
                 }`}
                 style={{ color: 'var(--primary)' }}
@@ -128,9 +130,9 @@ export default function App() {
               id="copy-btn"
               type="button"
               onClick={handleCopy}
-              className={`absolute -right-3 -top-3 bg-white text-primary w-12 h-12 rounded-full flex items-center justify-center border border-border shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 z-10${
-                copied ? ' bg-green-600/20' : ''
-              }`}
+              className={`absolute -right-3 -top-3 ${
+                copied ? 'bg-green-100' : 'bg-white'
+              } text-primary w-12 h-12 rounded-full flex items-center justify-center border border-border shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 z-10`}
               title="Copy to Clipboard"
             >
               <i className={copyIconClass}></i>
