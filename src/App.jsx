@@ -16,8 +16,8 @@ const OPTIONS = [
 ];
 
 const PLACEHOLDER = '••••••••••••';
-const MIN_LENGTH = 6;
-const MAX_LENGTH = 32;
+const MIN_LENGTH = 4;
+const MAX_LENGTH = 124;
 const INITIAL_LENGTH = 12;
 const INITIAL_SELECTION = { upper: true, lower: true, number: true, symbol: false };
 
@@ -39,6 +39,15 @@ function buildPassword(length, selection) {
 
 function sliderFill(length) {
   return ((length - MIN_LENGTH) / (MAX_LENGTH - MIN_LENGTH)) * 100;
+}
+
+// Shrink type as the password grows so long values stay inside the card.
+function passwordTextClass(count) {
+  if (count <= 16) return 'text-2xl md:text-3xl tracking-widest';
+  if (count <= 32) return 'text-xl md:text-2xl tracking-wide';
+  if (count <= 64) return 'text-base md:text-xl tracking-normal';
+  if (count <= 96) return 'text-sm md:text-lg tracking-normal';
+  return 'text-xs md:text-base tracking-normal';
 }
 
 function ToggleOption({ id, label, checked, onChange }) {
@@ -118,9 +127,9 @@ export default function App() {
                 id="password-output"
                 onClick={handleCopy}
                 title="Click to copy"
-                className={`mono text-2xl md:text-3xl font-bold tracking-widest text-center break-all text-primary select-all cursor-pointer${
-                  result.empty ? ' text-slate-600' : ''
-                }`}
+                className={`mono w-full pt-2 font-bold text-center break-all text-primary select-all cursor-pointer ${passwordTextClass(
+                  result.value.length
+                )}${result.empty ? ' text-slate-600' : ''}`}
                 style={{ color: 'var(--primary)' }}
               >
                 {result.value}

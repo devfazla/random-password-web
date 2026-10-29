@@ -7,7 +7,7 @@ Everything happens client-side — no network requests, no accounts, no storage.
 ## Features
 
 - **Cryptographically secure randomness** — uniform integers via rejection sampling (see below)
-- **Adjustable length** — 6 to 32 characters, defaults to 12; regenerates as you drag the slider
+- **Adjustable length** — 4 to 124 characters, defaults to 12; regenerates as you drag the slider, and the display scales its type down for long passwords
 - **Four character sets** — uppercase, lowercase, digits, and special characters, each toggleable
 - **One-click copy** — the copy button or the password itself writes to the clipboard and shows a green check for two seconds
 - **Empty-set guard** — disabling every character set displays `---` and blocks copying instead of producing a broken value
