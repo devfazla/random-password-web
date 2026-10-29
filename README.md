@@ -21,7 +21,7 @@ Everything happens client-side — no network requests, no accounts, no storage.
 | Build/dev    | Vite 5                          |
 | Styling      | Tailwind CSS 3 + a small CSS layer of design tokens in `src/styles.css` |
 | Fonts        | Montserrat (UI), Ubuntu Mono (password display) via Google Fonts |
-| Icons        | Font Awesome 6 via CDN          |
+| Icons        | Font Awesome 7 (CSS webfont, self-hosted from npm) |
 
 ## Getting started
 
@@ -33,7 +33,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs on <http://localhost:5173/random-password-web/>. The app is served under the `/random-password-web/` base path so local URLs match the deployed ones.
+The dev server runs on <http://localhost:5173/>. The custom domain serves the app from the site root, so the base path is `/` locally and in production.
 
 ```bash
 npm run build     # production bundle in dist/
@@ -44,9 +44,9 @@ npm run preview   # serve the built bundle locally
 
 ## Deployment
 
-Published to GitHub Pages at <https://devfazla.github.io/random-password-web/> as a project page.
+Published to GitHub Pages at <https://password.devfazla.com/> via a custom domain.
 
-- `vite.config.js` sets `base: '/random-password-web/'`, so built asset URLs carry the repository name. Renaming the repository means changing that value.
+- `vite.config.js` sets `base: '/'`, because a custom domain serves the project page from the site root. Without a custom domain, this would need to be `/random-password-web/`.
 - `.github/workflows/deploy.yml` builds on every push to `main` (and on manual dispatch), then publishes `dist/` through `actions/deploy-pages`.
 - The Pages source must be set to **GitHub Actions**, not a branch.
 - There is no client-side router, so no `404.html` fallback is required.
